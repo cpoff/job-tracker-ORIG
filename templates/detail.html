@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Job Detail</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Job Detail</h1>
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">{{ job.job_title }}</h5>
+                <p class="card-text">Company: {{ job.company }}</p>
+                <p class="card-text">Status: 
+                    <span id="status">{{ job.status }}</span>
+                    <a href="javascript:void(0);" id="edit-status" class="btn btn-link">Edit</a>
+                </p>
+                <p class="card-text">Created Date: {{ job.created_date }}</p>
+            </div>
+        </div>
+        <form method="POST">
+            {{ form.hidden_tag() }}
+            <div class="form-group mt-3">
+                {{ form.status.label }}
+                {{ form.status(class="form-control", id="status-input") }}
+            </div>
+            <button type="submit" class="btn btn-primary mt-3">Save</button>
+        </form>
+     <div style="padding-top: 5px;"><a href="{{ url_for('list_jobs') }}" class="btn btn-info">Back to List</a></div>
+
+    </div>
+
+    <script>
+        // Enable status editing
+        const editStatusBtn = document.getElementById('edit-status');
+        const statusSpan = document.getElementById('status');
+        const statusInput = document.getElementById('status-input');
+        const form = document.querySelector('form');
+
+        editStatusBtn.addEventListener('click', () => {
+            statusSpan.style.display = 'none';
+            statusInput.style.display = 'block';
+            statusInput.value = statusSpan.innerText;
+            editStatusBtn.style.display = 'none';
+        });
+
+        // Save status changes
+        form.addEventListener('submit', (event) => {
+            event.preventDefault();
+            const newStatus = statusInput.value;
+            statusSpan.innerText = newStatus;
+            statusInput.style.display = 'none';
+            statusSpan.style.display = 'inline';
+            editStatusBtn.style.display = 'inline';
+        });
+    </script>
+</body>
+</html>
+

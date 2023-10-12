@@ -1,0 +1,13 @@
+/* Add your CSS styles here */
+
+/* Styling for the list items to make each entry appear on a single line */
+li {
+    display: block;
+    margin-bottom: 10px; /* Adjust the margin to control the spacing between entries */
+}
+
+/* Style for the checkbox and claimed username */
+label {
+    display: inline-block;
+    margin-right: 10px; /* Add some spacing between the label and the checkbox/username */
+}

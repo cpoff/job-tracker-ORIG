@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Job Listings</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css">
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-10">
+                <h1>Job Listings</h1>
+
+                <!-- Active Job Postings -->
+                <h2 class="mt-5">Active</h2>
+                    <table class="table" id="active-jobs-table">
+            <thead>
+                <tr>
+                    <th>Job Title</th>
+                    <th>Company</th>
+                    <th>Status</th>
+                    <th>Created Date</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for job in active_jobs %}
+                <tr>
+                    <td><a href="{{ url_for('job_detail', id=job.id) }}">{{ job.job_title }}</a></td>
+                    <td>{{ job.company }}</td>
+                    <td>{{ job.status }}</td>
+                    <td>{{ job.created_date }}</td>
+                    <td><a href="{{ url_for('archive_job', id=job.id) }}" class="btn btn-warning">Archive</a></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+                <!-- Inactive Job Postings -->
+                <h2 class="mt-5">Inactive</h2>
+                <table class="table" id="inactive-jobs-table">
+            <thead>
+                <tr>
+                    <th>Job Title</th>
+                    <th>Company</th>
+                    <th>Status</th>
+                    <th>Created Date</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for job in inactive_jobs %}
+                <tr>
+                    <td><a href="{{ url_for('job_detail', id=job.id) }}">{{ job.job_title }}</a></td>
+                    <td>{{ job.company }}</td>
+                    <td>{{ job.status }}</td>
+                    <td>{{ job.created_date }}</td>
+                    <td><a href="{{ url_for('archive_job', id=job.id) }}" class="btn btn-warning">Unarchive</a></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+            </div>
+            <div class="col-md-2 border mt-5">
+                <!-- Sidebar -->
+                <center>
+                <div class="mt-4">
+                    <a href="{{ url_for('create_job') }}" class="btn btn-success">Add a new entry</a>
+                </div>
+
+                <div class="p-4">
+                    <a href="{{ url_for('clear_entries') }}" class="btn btn-danger">Clear all</a>
+                </div>
+                 </center>
+           </div>
+        </div>
+    </div>
+    <!-- Include jQuery and DataTables JavaScript -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $('#active-jobs-table, #inactive-jobs-table').DataTable({
+                paging: false, // Disable pagination
+                searching: false // Disable the search box
+            });
+        });
+    </script>
+</body>
+</html>
